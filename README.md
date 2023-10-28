@@ -1,5 +1,8 @@
 # ramrecovery
 
+Simple demo illustrating remanence of data in RAM. See https://en.wikipedia.org/wiki/Cold_boot_attack and
+associated papers for much more information!
+
 The program in src, loads 5100 images of the Mona Lisa into RAM on the Pi 4GB, running Raspberry Pi OS Lite.
 
 ```
