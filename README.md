@@ -24,7 +24,9 @@ sudo insmod ./lime-$(uname -r).ko "path=out.dump format=padded"
 Extract Mona Lisa images from memory dump:
 
 ```
-grep --byte-offset --only-matching -aPo '\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x58\x02' out.dump | sed "s/:.*//g" | xargs -I {} dd if=out.dump bs=1 skip={} count=725444 of={}.tga
+grep --text --byte-offset --only-matching --perl-regexp '\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x58\x02' out.dump | sed "s/:.*//g" | xargs -I {} dd if=out.dump bs=1 skip={} count=725444 of={}.tga
 montage -border 0 -mode concatenate *.tga tiled.jpg
-convert -resize "1000>" tiled.jpg tiled_small.jpg
+convert -resize "3000>" tiled.jpg tiled_small.jpg
 ```
+
+![Tiled Output](images/tiled_small.jpg)
