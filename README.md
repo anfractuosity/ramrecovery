@@ -33,3 +33,7 @@ convert -resize "3000>" tiled.jpg tiled_small.jpg
 ```
 
 ![Tiled Output](images/tiled_small.jpg)
+
+## References
+
+See the original paper "Lest We Remember: Cold Boot Attacks on Encryption Keys" by Halderman et al.  They loaded an image of the Mona Lisa and "cut power for varying lengths of time".
