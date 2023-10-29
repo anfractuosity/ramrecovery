@@ -3,7 +3,7 @@
 Simple demo illustrating remanence of data in RAM. See https://en.wikipedia.org/wiki/Cold_boot_attack and
 associated papers for much more information!
 
-The program in src, loads 5100 images of the Mona Lisa into RAM on the Pi 4GB, running Raspberry Pi OS Lite.
+The program in src, loads 5100 + 1 images of the Mona Lisa into RAM on the Pi 4GB, running Raspberry Pi OS Lite.
 
 ```
 cd src
@@ -33,6 +33,12 @@ convert -resize "3000>" tiled.jpg tiled_small.jpg
 ```
 
 ![Tiled Output](images/tiled_small.jpg)
+
+## To Do
+
+* Experiment with different power off/on delays
+* Show same Mona Lisa changing over time
+* Experiment with freeze spray
 
 ## References
 
