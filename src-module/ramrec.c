@@ -7,6 +7,7 @@
 #include <linux/dma-mapping.h>
 #include <linux/io.h>
 
+#define CONTIGUOUS_START 0x2400000
 #define IMAGE_SIZE 725444U
 
 MODULE_LICENSE("GPL");
@@ -82,7 +83,7 @@ static int __init ramrecovery_init(void)
 		}
 	} else {
 		// Try to read from same amount of contiguous RAM, as we allocated previously
-		kbuf = memremap(0x2400000, size, MEMREMAP_WB);
+		kbuf = memremap(CONTIGUOUS_START, size, MEMREMAP_WB);
 
 		if (!kbuf) {
 			printk("Memory mapping failed\n");

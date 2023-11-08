@@ -34,6 +34,42 @@ convert -resize "3000>" tiled.jpg tiled_small.jpg
 
 ![Tiled Output](images/tiled_small.jpg)
 
+## Kernel module for filling contiguous RAM with Mona Lisa
+
+The kernel module obtains contiguous RAM and fills with Mona Lisa.
+
+In /boot/cmdline.txt, added the following to allocate 700MB of contiguous kernel RAM:
+```
+cma=700M@36M
+```
+
+And the following (from https://forums.raspberrypi.com/viewtopic.php?p=2132596#p2132596) to /boot/config.txt (to maximise CMA):
+
+```
+[all]
+device_tree_address=0x2000000
+device_tree_end=0x20FFFFF
+```
+
+```
+cd src-module
+make
+```
+
+Use the following to fill contiguous RAM, with Mona.
+
+```
+sudo insmod ramrec.ko writetoram=1
+```
+
+Power cycle pi and then use the following to dump contiguous RAM area:
+
+```
+sudo insmod ramrec.ko writetoram=0
+```
+
+Use previous grep command to extract images from dump, out.bin.
+
 ## To Do
 
 * Experiment with different power off/on delays
