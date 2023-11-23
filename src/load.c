@@ -48,7 +48,7 @@ int main()
 			i++;
 		}
 
-		printf("Done\n");
+		printf("Done - injected %lu images\n", i+1);
 		fflush(stdout);
 
 		while (1) {
