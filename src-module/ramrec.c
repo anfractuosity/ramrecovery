@@ -38,6 +38,7 @@ static int __init ramrecovery_init(void)
 	int image;		// Image number
 	int imagebyte;		// Index of nth byte of Mona Lisa image
 	char *mona;		// Holds Mona Lisa
+	int count;		// Count number of images wrote to memory
 	int ret;
 
 	if (writetoram) {
@@ -80,7 +81,9 @@ static int __init ramrecovery_init(void)
 			for (imagebyte = 0; imagebyte < IMAGE_SIZE; imagebyte++) {
 				kbuf[image + imagebyte] = mona[imagebyte];
 			}
+			count++;
 		}
+		printk("Wrote %d images\n", count);
 	} else {
 		// Try to read from same amount of contiguous RAM, as we allocated previously
 		kbuf = memremap(CONTIGUOUS_START, size, MEMREMAP_WB);
