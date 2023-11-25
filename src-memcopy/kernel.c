@@ -6,7 +6,7 @@ unsigned long long *HEAP_START_;
 void main()
 {
 	uart_init();
-	unsigned char *HEAP_START = (unsigned char *)0x400000;	// Top of stack
+	unsigned char *HEAP_START = (unsigned char *)0x0;
 	unsigned long HEAP_SIZE = 0x100000000 / 8;
 
 	if ((long)HEAP_START % 8 != 0) {
