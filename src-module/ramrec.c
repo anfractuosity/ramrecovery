@@ -5,6 +5,7 @@
 #include <linux/kallsyms.h>
 #include <linux/platform_device.h>
 #include <linux/dma-mapping.h>
+#include <linux/dma-direct.h>
 #include <linux/io.h>
 
 #define CONTIGUOUS_START 0x2400000
@@ -74,6 +75,7 @@ static int __init ramrecovery_init(void)
 		ret = kernel_read(fp, mona, IMAGE_SIZE, NULL);
 
 		// Fill contiguous RAM with Mona
+		printk("Writing to address %llx and beyond\n", dma_to_phys(&dev.dev, handle));
 		for (image = 0; image < size; image += IMAGE_SIZE) {
 			printk("Image %d\n", image);
 			if (image + IMAGE_SIZE >= size)
