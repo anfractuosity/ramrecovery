@@ -1,9 +1,9 @@
 # ramrecovery
 
-Simple demo illustrating remanence of data in RAM. See https://en.wikipedia.org/wiki/Cold_boot_attack and
-associated papers for much more information!
+Simple demo illustrating remanence of data in RAM. See https://en.wikipedia.org/wiki/Cold_boot_attack and associated papers for much more information!  In one of the original cold boot
+attack papers "Lest We Remember: Cold Boot Attacks on Encryption Keys" by Halderman et al. they loaded an image of the Mona Lisa and "cut power for varying lengths of time".
 
-The program in src, loads 5100 + 1 images of the Mona Lisa into RAM on the Pi 4GB, running Raspberry Pi OS Lite.
+The program in src, loads many images of the Mona Lisa into RAM on the Pi, running Raspberry Pi OS Lite.
 
 ```
 cd src
@@ -76,6 +76,3 @@ Use previous grep command to extract images from dump, out.bin.
 * Show same Mona Lisa changing over time
 * Experiment with freeze spray
 
-## References
-
-See the original paper "Lest We Remember: Cold Boot Attacks on Encryption Keys" by Halderman et al.  They loaded an image of the Mona Lisa and "cut power for varying lengths of time".
