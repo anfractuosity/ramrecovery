@@ -26,8 +26,8 @@ int main()
 	fread(buffer, monasize, 1, fp);
 
 	// Try to guess how much memory is free and make sure to subtract
-	// an amount to avoid getting OOM killed (200MB in this case).
-	unsigned long size = getTotalSystemMemory() - (1024 * 1024 * 200);
+	// an amount to avoid getting OOM killed (500MB in this case).
+	unsigned long size = getTotalSystemMemory() - (1024 * 1024 * 500);
 	char *buffer2 = NULL;
 
 	// Try amounts decreasing by 50MB at a time, till we are able to allocate
