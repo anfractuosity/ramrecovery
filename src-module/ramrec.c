@@ -7,14 +7,18 @@
 #include <linux/dma-mapping.h>
 #include <linux/dma-direct.h>
 #include <linux/io.h>
+#include <linux/types.h>
 
 #define CONTIGUOUS_START 0x2400000
-#define IMAGE_SIZE 725444U
 
 MODULE_LICENSE("GPL");
 
-static int writetoram = 0;	// Whether to write Mona to RAM, or try to read Mona from RAM
-module_param(writetoram, int, 0660);
+static bool writetoram = true;		// Whether to write Mona to RAM, or try to read Mona from RAM
+module_param(writetoram, bool, 0660);
+static bool singleimage = false;	// Whether to write a single image or not
+module_param(singleimage, bool, 0660);
+static char *filename = "./mona.tga";	// Name of filename to load into RAM
+module_param(filename, charp, 0660);
 
 static char *kbuf = NULL;
 static dma_addr_t handle;
@@ -40,6 +44,7 @@ static int __init ramrecovery_init(void)
 	int imagebyte;		// Index of nth byte of Mona Lisa image
 	char *mona;		// Holds Mona Lisa
 	int count;		// Count number of images wrote to memory
+	int image_size;		// Size of image
 	int ret;
 
 	if (writetoram) {
@@ -58,32 +63,39 @@ static int __init ramrecovery_init(void)
 			printk(KERN_ERR "dma_set_mask returned: %d\n", ret);
 			goto err;
 		}
+
 		// Allocate lots of contiguous RAM
 		kbuf = dma_alloc_coherent(&dev.dev, size, &handle, GFP_KERNEL);
 		if (!kbuf) {
 			printk(KERN_ERR "dma_alloc_coherent failed\n");
 			goto err;
 		}
+
 		// Open Mona file
-		fp = filp_open("./mona.tga", O_RDONLY, 0);
+		fp = filp_open(filename, O_RDONLY, 0);
 		if (IS_ERR(fp)) {
 			printk(KERN_ERR "Loading Mona failed\n");
 			goto err;
 		}
+
 		// Read Mona to buffer
-		mona = kmalloc(IMAGE_SIZE, GFP_KERNEL);
-		ret = kernel_read(fp, mona, IMAGE_SIZE, NULL);
+		image_size = i_size_read(file_inode(fp));
+		printk("Image size %d\n", image_size);
+		mona = kmalloc(image_size, GFP_KERNEL);
+		ret = kernel_read(fp, mona, image_size, NULL);
 
 		// Fill contiguous RAM with Mona
-		printk("Writing to address %llx and beyond\n", dma_to_phys(&dev.dev, handle));
-		for (image = 0; image < size; image += IMAGE_SIZE) {
+		printk("Writing to address %llx\n", dma_to_phys(&dev.dev, handle));
+		for (image = 0; image < size; image += image_size) {
 			printk("Image %d\n", image);
-			if (image + IMAGE_SIZE >= size)
+			if (image + image_size >= size)
 				break;
-			for (imagebyte = 0; imagebyte < IMAGE_SIZE; imagebyte++) {
+			for (imagebyte = 0; imagebyte < image_size; imagebyte++) {
 				kbuf[image + imagebyte] = mona[imagebyte];
 			}
 			count++;
+			if (singleimage)
+				break;
 		}
 		printk("Wrote %d images\n", count);
 	} else {
