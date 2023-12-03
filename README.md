@@ -3,6 +3,12 @@
 Simple demo illustrating remanence of data in RAM. See https://en.wikipedia.org/wiki/Cold_boot_attack and associated papers for much more information!  In one of the original cold boot
 attack papers "Lest We Remember: Cold Boot Attacks on Encryption Keys" by Halderman et al. they loaded an image of the Mona Lisa and "cut power for varying lengths of time".
 
+* src - Program to fill memory with the Mona Lisa
+* src-experiment - Automated experiment, uses Raspberry Pi OS to inject single image into contiguous RAM, then uses bare metal kernel to dump memory.  Makes use of modified USB hub that is controlled by relays,
+to automatically choose which USB disk to boot from. Uses Wifi plug running Tasmota turn on/off Pi.  The experiment script controls the target Pi using SSH.
+* src-memcopy - Bare metal kernel to dump memory over Raspberry Pi UART interface.
+* src-module - Linux kernel module to inject image(s) into contiguous memory
+
 The program in src, loads many images of the Mona Lisa into RAM on the Pi, running Raspberry Pi OS Lite.
 
 ```
@@ -32,8 +38,6 @@ montage -border 0 -mode concatenate *.tga tiled.jpg
 convert -resize "3000>" tiled.jpg tiled_small.jpg
 ```
 
-![Tiled Output](images/tiled_small.jpg)
-
 ## Kernel module for filling contiguous RAM with Mona Lisa
 
 The kernel module obtains contiguous RAM and fills with Mona Lisa.
@@ -59,20 +63,5 @@ make
 Use the following to fill contiguous RAM, with Mona.
 
 ```
-sudo insmod ramrec.ko writetoram=1
+sudo insmod ramrec.ko writetoram=true filename="mona.tga" singleimage=false
 ```
-
-Power cycle pi and then use the following to dump contiguous RAM area:
-
-```
-sudo insmod ramrec.ko writetoram=0
-```
-
-Use previous grep command to extract images from dump, out.bin.
-
-## To Do
-
-* Experiment with different power off/on delays
-* Show same Mona Lisa changing over time
-* Experiment with freeze spray
-
