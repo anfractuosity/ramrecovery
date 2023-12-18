@@ -11,7 +11,7 @@ to automatically choose which USB disk to boot from. Uses Wifi plug running Tasm
 
 Also see my little article about this project in https://pagedout.institute/?page=issues.php Issue #3, page 14.
 
-The following image shows the setup for dumping memory from a raspberry pi using the bare metal kernel.  A USB hub was modified so that active devices could be chosen via relays (should switch to MOSFETs sometime!), to choose between a USB disk running my bare metal or Raspberry Pi OS.  The memory was dumped from the Pi via UART at 1 MBaud to another Pi.
+The following image shows the setup for dumping memory from a Raspberry Pi using the aforementioned bare metal kernel.  A USB hub was modified so that active devices could be chosen via relays (should switch to using MOSFETs sometime!), to choose between a USB disk running the bare metal kernel or Raspberry Pi OS.  The memory could then be dumped, after varying delays from the Pi via UART at 1 MBaud to another Pi.
 
 ![Setup](images/setup.jpg)
 
