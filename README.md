@@ -9,6 +9,12 @@ to automatically choose which USB disk to boot from. Uses Wifi plug running Tasm
 * src-memcopy - Bare metal kernel to dump memory over Raspberry Pi UART interface.
 * src-module - Linux kernel module to inject image(s) into contiguous memory
 
+Also see my little article about this project in https://pagedout.institute/?page=issues.php Issue #3, page 14.
+
+The following image shows the setup for dumping memory from a raspberry pi using the bare metal kernel.  A USB hub was modified so that active devices could be chosen via relays (should switch to MOSFETs sometime!), to choose between a USB disk running my bare metal or Raspberry Pi OS.  The memory was dumped from the Pi via UART at 1 MBaud to another Pi.
+
+![Setup](images/setup.jpg)
+
 The program in src, loads many images of the Mona Lisa into RAM on the Pi, running Raspberry Pi OS Lite.
 
 ```
