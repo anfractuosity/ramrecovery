@@ -71,3 +71,9 @@ Use the following to fill contiguous RAM, with Mona.
 ```
 sudo insmod ramrec.ko writetoram=true filename="mona.tga" singleimage=false
 ```
+
+## Image recovered after 0.75s delay
+
+The following image was extracted after a 0.75s delay, without cooling through the automated experiment (see src-experiment).  I noticed the images decayed very quickly with no cooling, for example they appeared almost completely decayed around 1s.
+
+![Recovered Image](images/image_0.75.png)
